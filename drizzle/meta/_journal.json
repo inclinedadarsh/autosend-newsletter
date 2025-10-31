@@ -22,6 +22,13 @@
       "when": 1761934077261,
       "tag": "0002_serious_maddog",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1761941818132,
+      "tag": "0003_smooth_the_captain",
+      "breakpoints": true
     }
   ]
 }
