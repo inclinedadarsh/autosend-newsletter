@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Noto_Serif_JP, Inter, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const notoSerifJP = Noto_Serif_JP({
   variable: "--font-noto-serif-jp",
@@ -30,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Toaster richColors theme="light" position="top-center" />
+      </body>
     </html>
   );
 }
