@@ -124,3 +124,102 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* MDXEditor content styling */
+.mdx-editor-content {
+  @apply font-serif;
+  min-height: 400px;
+  padding: 1rem;
+  line-height: 1.75;
+}
+
+.mdx-editor-content h1,
+.mdx-editor-content h2,
+.mdx-editor-content h3,
+.mdx-editor-content h4,
+.mdx-editor-content h5,
+.mdx-editor-content h6 {
+  @apply font-sans;
+}
+
+.mdx-editor-content h1 {
+  @apply text-4xl font-bold mb-4 mt-6;
+}
+
+.mdx-editor-content h2 {
+  @apply text-3xl font-bold mb-3 mt-5;
+}
+
+.mdx-editor-content h3 {
+  @apply text-2xl font-semibold mb-2 mt-4;
+}
+
+.mdx-editor-content h4 {
+  @apply text-xl font-semibold mb-2 mt-3;
+}
+
+.mdx-editor-content h5 {
+  @apply text-lg font-semibold mb-2 mt-3;
+}
+
+.mdx-editor-content h6 {
+  @apply text-base font-semibold mb-2 mt-2;
+}
+
+.mdx-editor-content p {
+  @apply font-serif mb-4 leading-relaxed;
+}
+
+.mdx-editor-content ul,
+.mdx-editor-content ol {
+  @apply font-serif mb-4 ml-6;
+}
+
+.mdx-editor-content ul {
+  @apply list-disc;
+}
+
+.mdx-editor-content ol {
+  @apply list-decimal;
+}
+
+.mdx-editor-content li {
+  @apply font-serif mb-2;
+}
+
+.mdx-editor-content blockquote {
+  @apply font-serif border-l-4 border-gray-300 pl-4 italic my-4;
+}
+
+.mdx-editor-content code {
+  @apply font-mono bg-gray-100 px-1 py-0.5 rounded text-sm;
+}
+
+.mdx-editor-content pre {
+  @apply font-mono bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.mdx-editor-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.mdx-editor-content a {
+  @apply text-blue-600 underline hover:text-blue-800;
+}
+
+.mdx-editor-content table {
+  @apply font-serif border-collapse border border-gray-300 mb-4;
+}
+
+.mdx-editor-content th,
+.mdx-editor-content td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.mdx-editor-content th {
+  @apply bg-gray-100 font-semibold;
+}
+
+.mdx-editor-content hr {
+  @apply my-6 border-t border-gray-300;
+}
