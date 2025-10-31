@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Noto Serif JP", serif;
-  --font-serif: "Inter", sans-serif;
+  --font-serif: "Noto Serif JP", serif;
+  --font-sans: "Inter", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 }
 
