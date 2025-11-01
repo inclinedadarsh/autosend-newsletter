@@ -1,9 +1,13 @@
+import { sql } from "drizzle-orm";
 import IssuesList from "@/components/IssuesList";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
 async function getAllIssues() {
-  const allIssues = await db.select().from(issues);
+  const allIssues = await db
+    .select()
+    .from(issues)
+    .orderBy(sql`COALESCE(${issues.publishedAt}, ${issues.createdAt}) DESC`);
   return allIssues;
 }
 

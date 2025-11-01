@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
@@ -5,7 +6,10 @@ import { issues } from "@/db/schema";
 import { verifyAdminAuth } from "@/lib/auth";
 
 export async function GET() {
-  const allIssues = await db.select().from(issues);
+  const allIssues = await db
+    .select()
+    .from(issues)
+    .orderBy(sql`COALESCE(${issues.publishedAt}, ${issues.createdAt}) DESC`);
   return NextResponse.json(allIssues);
 }
 
