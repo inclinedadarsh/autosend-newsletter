@@ -6,7 +6,7 @@ export const issues = pgTable("issues", {
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   description: text("description"),
   content: text("content"),
-  publishedAt: timestamp("published_at"),
+  publishedAt: timestamp("published_at").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

@@ -1,0 +1,1 @@
+ALTER TABLE "issues" ALTER COLUMN "published_at" SET NOT NULL;

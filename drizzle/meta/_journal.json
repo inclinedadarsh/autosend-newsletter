@@ -29,6 +29,13 @@
       "when": 1761941818132,
       "tag": "0003_smooth_the_captain",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1762029024109,
+      "tag": "0004_cooing_namor",
+      "breakpoints": true
     }
   ]
 }
