@@ -90,9 +90,10 @@ const Editor = ({ markdown, onChange }: EditorProps) => {
         linkPlugin(),
         linkDialogPlugin(),
         tablePlugin(),
-        codeBlockPlugin({ defaultCodeBlockLanguage: "" }),
+        codeBlockPlugin({ defaultCodeBlockLanguage: "plaintext" }),
         codeMirrorPlugin({
           codeBlockLanguages: {
+            plaintext: "Plain Text",
             js: "JavaScript",
             jsx: "JavaScript (JSX)",
             ts: "TypeScript",

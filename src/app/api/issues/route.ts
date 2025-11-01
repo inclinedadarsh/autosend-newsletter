@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
@@ -21,6 +22,9 @@ export async function POST(request: NextRequest) {
       publishedAt: new Date(publishingDate),
     })
     .returning();
+
+  // Revalidate only the specific issue page
+  revalidatePath(`/issues/${slug}`);
 
   return NextResponse.json(issue, { status: 201 });
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Editor from "@/components/Editor";
@@ -10,6 +11,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 
 const NewIssuePage = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [publishingDate, setPublishingDate] = useState("");
@@ -54,6 +56,7 @@ const NewIssuePage = () => {
       }
       const data = await response.json();
       toast.success("Issue created successfully");
+      router.push(`/issues/${data.slug}`);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to create issue",
