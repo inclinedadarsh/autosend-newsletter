@@ -4,6 +4,11 @@ import { db } from "@/db";
 import { issues } from "@/db/schema";
 import { verifyAdminAuth } from "@/lib/auth";
 
+export async function GET() {
+  const allIssues = await db.select().from(issues);
+  return NextResponse.json(allIssues);
+}
+
 export async function POST(request: NextRequest) {
   const { authenticated, error } = await verifyAdminAuth();
   if (!authenticated) {
