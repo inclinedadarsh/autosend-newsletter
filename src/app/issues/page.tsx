@@ -7,7 +7,7 @@ async function getAllIssues() {
   return allIssues;
 }
 
-export default async function Home() {
+export default async function IssuesPage() {
   const allIssues = await getAllIssues();
 
   return (
