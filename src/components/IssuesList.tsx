@@ -1,61 +1,49 @@
-import Link from "next/link";
+import type { Issue } from "@/types";
+import IssueItem from "./IssueItem";
 
-interface Issue {
-  id: number;
-  title: string;
-  slug: string;
-  description: string | null;
-  content: string | null;
-  publishedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export default function IssuesList({ issues }: { issues: Issue[] }) {
+  if (issues.length === 0) {
+    return <p className="text-muted-foreground font-serif">No issues yet.</p>;
+  }
 
-interface IssuesListProps {
-  issues: Issue[];
-}
+  // Group issues by year
+  const issuesByYear = issues.reduce(
+    (acc, issue) => {
+      const year = new Date(issue.publishedAt).getFullYear();
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(issue);
+      return acc;
+    },
+    {} as Record<number, Issue[]>,
+  );
 
-export default function IssuesList({ issues }: IssuesListProps) {
+  // Sort years in descending order (most recent first)
+  const sortedYears = Object.keys(issuesByYear)
+    .map(Number)
+    .sort((a, b) => b - a);
+
+  // Sort issues within each year by publishedAt (most recent first)
+  sortedYears.forEach((year) => {
+    issuesByYear[year].sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    );
+  });
+
   return (
-    <>
-      {issues.length === 0 ? (
-        <p className="text-muted-foreground font-serif">No issues yet.</p>
-      ) : (
-        <ul className="space-y-6">
-          {issues.map((issue) => {
-            const formattedDate = issue.publishedAt
-              ? new Date(issue.publishedAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })
-              : null;
-
-            return (
-              <li key={issue.id} className="border-b pb-6 last:border-b-0">
-                <Link
-                  href={`/issues/${issue.slug}`}
-                  className="block hover:opacity-80 transition-opacity"
-                >
-                  <h2 className="text-2xl font-bold mb-2 font-sans hover:underline">
-                    {issue.title}
-                  </h2>
-                  {formattedDate && (
-                    <time className="text-sm text-muted-foreground font-serif">
-                      {formattedDate}
-                    </time>
-                  )}
-                  {issue.description && (
-                    <p className="text-muted-foreground mt-2 font-serif">
-                      {issue.description}
-                    </p>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </>
+    <div className="space-y-7 mt-10">
+      {sortedYears.map((year) => (
+        <div key={year} className="space-y-3">
+          <p className="font-mono">{year}</p>
+          <div className="space-y-3">
+            {issuesByYear[year].map((issue) => (
+              <IssueItem key={issue.id} issue={issue} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
