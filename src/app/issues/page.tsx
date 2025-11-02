@@ -4,6 +4,9 @@ import IssuesList from "@/components/IssuesList";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
+// Force static generation at build time
+export const dynamic = "force-static";
+
 async function getAllIssues() {
   const allIssues = await db
     .select()

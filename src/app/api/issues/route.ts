@@ -32,7 +32,9 @@ export async function POST(request: NextRequest) {
     })
     .returning();
 
-  // Revalidate only the specific issue page
+  // Revalidate the home page, issues list page, and the specific issue page
+  revalidatePath("/");
+  revalidatePath("/issues");
   revalidatePath(`/issues/${slug}`);
 
   return NextResponse.json(issue, { status: 201 });

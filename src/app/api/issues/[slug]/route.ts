@@ -44,8 +44,9 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
 
-  // Revalidate the home page and issue pages
+  // Revalidate the home page, issues list page, and issue pages
   revalidatePath("/");
+  revalidatePath("/issues");
   revalidatePath(`/issues/${slug}`);
 
   return NextResponse.json(deletedIssue, { status: 200 });
@@ -91,8 +92,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
 
-  // Revalidate the home page and both old and new issue pages
+  // Revalidate the home page, issues list page, and both old and new issue pages
   revalidatePath("/");
+  revalidatePath("/issues");
   revalidatePath(`/issues/${slug}`);
   if (body.slug && body.slug !== slug) {
     revalidatePath(`/issues/${body.slug}`);
