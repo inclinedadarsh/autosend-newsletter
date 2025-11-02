@@ -55,7 +55,7 @@ export default async function IssuePage({ params }: PageProps) {
   const formattedDate = `${day} ${monthShort}, ${year}`;
 
   return (
-    <div className="">
+    <div className="w-full max-w-2xl mx-auto px-5 md:px-0">
       <article className="">
         <header className="mt-20 mb-10 space-y-4">
           <div className="text-sm text-muted-foreground">

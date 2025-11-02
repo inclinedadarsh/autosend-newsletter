@@ -16,7 +16,7 @@ export default async function IssuesPage() {
   const allIssues = await getAllIssues();
 
   return (
-    <div className="">
+    <div className="w-full max-w-2xl mx-auto px-5 md:px-0">
       <h1 className="text-3xl font-bold font-sans mt-20">Newsletter Issues</h1>
       <p className="text-lg text-muted-foreground mt-1">
         I write about LLMs, Machine Learning and Web Development.
