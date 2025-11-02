@@ -5,6 +5,7 @@ import rehypeStringify from "rehype-stringify";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
@@ -47,26 +48,22 @@ export default async function IssuePage({ params }: PageProps) {
 
   const htmlContent = issue.content ? await markdownToHtml(issue.content) : "";
 
-  const formattedDate = issue.publishedAt
-    ? new Date(issue.publishedAt).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  const publishedDate = new Date(issue.publishedAt);
+  const day = publishedDate.getDate();
+  const monthShort = publishedDate.toLocaleString("en-US", { month: "short" });
+  const year = publishedDate.getFullYear();
+  const formattedDate = `${day} ${monthShort}, ${year}`;
 
   return (
-    <div className="container mx-auto max-w-4xl py-12 px-4">
-      <article className="prose prose-lg max-w-none">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold mb-4 font-sans">{issue.title}</h1>
-          {formattedDate && (
-            <time className="text-muted-foreground text-sm font-serif">
-              {formattedDate}
-            </time>
-          )}
+    <div className="">
+      <article className="">
+        <header className="mt-20 mb-10 space-y-4">
+          <div className="text-sm text-muted-foreground">
+            Adarsh Dubey — <time className="">{formattedDate}</time>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold">{issue.title}</h1>
           {issue.description && (
-            <p className="text-lg text-muted-foreground mt-4 font-serif">
+            <p className="text-muted-foreground mt-4 text-lg">
               {issue.description}
             </p>
           )}
@@ -80,6 +77,7 @@ export default async function IssuePage({ params }: PageProps) {
           />
         )}
       </article>
+      <Footer />
     </div>
   );
 }

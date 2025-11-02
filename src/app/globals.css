@@ -248,27 +248,27 @@
 }
 
 .issue-content h2 {
-  @apply text-3xl font-bold mb-3 mt-5;
+  @apply text-2xl font-semibold mb-3 mt-10;
 }
 
 .issue-content h3 {
-  @apply text-2xl font-semibold mb-2 mt-4;
+  @apply text-xl font-semibold mb-2 mt-6;
 }
 
 .issue-content h4 {
-  @apply text-xl font-semibold mb-2 mt-3;
+  @apply text-lg font-semibold mb-2 mt-4;
 }
 
 .issue-content h5 {
-  @apply text-lg font-semibold mb-2 mt-3;
-}
-
-.issue-content h6 {
   @apply text-base font-semibold mb-2 mt-2;
 }
 
+.issue-content h6 {
+  @apply text-base mb-2 mt-2;
+}
+
 .issue-content p {
-  @apply font-serif mb-4 leading-relaxed;
+  @apply font-serif mb-4 leading-relaxed font-medium;
 }
 
 .issue-content ul,
@@ -289,7 +289,7 @@
 }
 
 .issue-content blockquote {
-  @apply font-serif border-l-4 border-gray-300 pl-4 italic my-4;
+  @apply font-serif border-l-2 border-orange-500 pl-4 my-4 font-medium;
 }
 
 .issue-content code {
@@ -305,7 +305,7 @@
 }
 
 .issue-content a {
-  @apply text-blue-600 underline hover:text-blue-800;
+  @apply text-blue-600 hover:text-blue-800;
 }
 
 .issue-content u {
