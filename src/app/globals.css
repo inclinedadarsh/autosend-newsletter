@@ -129,7 +129,6 @@
 .mdx-editor-content {
   @apply font-serif;
   min-height: 400px;
-  padding: 1rem;
   line-height: 1.75;
 }
 
@@ -147,11 +146,11 @@
 }
 
 .mdx-editor-content h2 {
-  @apply text-3xl font-bold mb-3 mt-5;
+  @apply text-2xl font-semibold mb-3 mt-10;
 }
 
 .mdx-editor-content h3 {
-  @apply text-2xl font-semibold mb-2 mt-4;
+  @apply text-xl font-semibold mb-2 mt-6;
 }
 
 .mdx-editor-content h4 {
