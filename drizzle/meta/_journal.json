@@ -50,6 +50,20 @@
       "when": 1762182539513,
       "tag": "0006_dear_synch",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1762186403843,
+      "tag": "0007_absurd_tattoo",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1762186718389,
+      "tag": "0008_illegal_domino",
+      "breakpoints": true
     }
   ]
 }

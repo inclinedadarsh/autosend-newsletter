@@ -1,0 +1,1 @@
+ALTER TABLE "subscribers" ADD COLUMN "is_verified" boolean DEFAULT false;
