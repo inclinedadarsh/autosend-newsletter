@@ -1,6 +1,7 @@
 import { desc } from "drizzle-orm";
 import Footer from "@/components/Footer";
 import IssuesList from "@/components/IssuesList";
+import SubscribeModal from "@/components/SubscribeModal";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
@@ -25,6 +26,7 @@ export default async function Home() {
         Figuring out LLM fine-tuning with Google DeepMind.
       </p>
       <IssuesList issues={allIssues} />
+      <SubscribeModal />
       <Footer />
     </div>
   );

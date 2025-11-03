@@ -6,6 +6,7 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import Footer from "@/components/Footer";
+import SubscribeModal from "@/components/SubscribeModal";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
@@ -77,6 +78,7 @@ export default async function IssuePage({ params }: PageProps) {
           />
         )}
       </article>
+      <SubscribeModal />
       <Footer />
     </div>
   );
