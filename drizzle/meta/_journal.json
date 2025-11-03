@@ -36,6 +36,20 @@
       "when": 1762029024109,
       "tag": "0004_cooing_namor",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1762182310385,
+      "tag": "0005_burly_patriot",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1762182539513,
+      "tag": "0006_dear_synch",
+      "breakpoints": true
     }
   ]
 }
