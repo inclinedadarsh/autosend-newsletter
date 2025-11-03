@@ -2,6 +2,7 @@ import { and, eq, gt } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { subscribers } from "@/db/schema";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,6 +46,13 @@ export async function POST(request: NextRequest) {
 
     if (!updated) {
       return NextResponse.json({ ok: false }, { status: 200 });
+    }
+
+    // Best-effort welcome email; verification should succeed regardless of email outcome
+    try {
+      await sendWelcomeEmail(existing.email, existing.name ?? undefined);
+    } catch {
+      // Intentionally ignored
     }
 
     return NextResponse.json({ ok: true }, { status: 200 });
