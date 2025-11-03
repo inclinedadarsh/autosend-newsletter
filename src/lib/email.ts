@@ -1,5 +1,6 @@
 const AUTOSEND_API_KEY = process.env.AUTOSEND_API_KEY;
 const VERIFICATION_TEMPLATE_ID = process.env.VERIFICATION_TEMPLATE_ID;
+const SITE_LINK = process.env.SITE_LINK;
 
 export async function sendVerificationEmail(
   email: string,
@@ -24,7 +25,7 @@ export async function sendVerificationEmail(
       templateId: VERIFICATION_TEMPLATE_ID,
       dynamicData: {
         name: name || email,
-        token: token,
+        link: `${SITE_LINK}/?verification-token=${token}`,
       },
       replyTo: {
         email: "dubeyadarshmain@gmail.com",

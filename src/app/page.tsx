@@ -2,6 +2,7 @@ import { desc } from "drizzle-orm";
 import Footer from "@/components/Footer";
 import IssuesList from "@/components/IssuesList";
 import SubscribeModal from "@/components/SubscribeModal";
+import VerifyToken from "@/components/VerifyToken";
 import { db } from "@/db";
 import { issues } from "@/db/schema";
 
@@ -21,6 +22,7 @@ export default async function Home() {
 
   return (
     <div className="w-full max-w-2xl mx-auto px-5 md:px-0">
+      <VerifyToken />
       <h1 className="text-3xl font-bold font-sans mt-20">Adarsh Dubey</h1>
       <p className="text-lg text-muted-foreground mt-1">
         Figuring out LLM fine-tuning with Google DeepMind.
