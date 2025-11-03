@@ -1,7 +1,9 @@
+import crypto from "node:crypto";
 import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { subscribers } from "@/db/schema";
+import { sendVerificationEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,24 +32,112 @@ export async function POST(request: NextRequest) {
       .limit(1);
 
     if (existing) {
-      // If already subscribed with same slug, treat as idempotent success
-      if (existing.slug === slug) {
-        return NextResponse.json(existing, { status: 200 });
+      // If the email is already verified, block re-subscription
+      if (existing.isVerified) {
+        return NextResponse.json(
+          { error: "This email is already subscribed." },
+          { status: 409 },
+        );
       }
-      // Email is globally unique, so cannot subscribe same email to another slug
-      console.log("Email already subscribed");
-      return NextResponse.json(
-        { error: "Email already subscribed" },
-        { status: 409 },
-      );
+
+      // Not verified yet; check token expiry
+      const now = new Date();
+      const isExpired =
+        !existing.tokenExpiresAt ||
+        existing.tokenExpiresAt.getTime() <= now.getTime();
+
+      if (!isExpired) {
+        return NextResponse.json(
+          {
+            error:
+              "You're almost there. Please confirm your subscription from the email we sent.",
+          },
+          { status: 409 },
+        );
+      }
+
+      // Token expired → reset token and related fields (keep email the same)
+      const newToken = crypto.randomBytes(32).toString("hex");
+      const newTokenExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+      try {
+        const updated = await db.transaction(async (tx) => {
+          const [row] = await tx
+            .update(subscribers)
+            .set({
+              name,
+              slug,
+              token: newToken,
+              tokenExpiresAt: newTokenExpiresAt,
+              isVerified: false,
+              verifiedAt: null,
+            })
+            .where(eq(subscribers.email, email))
+            .returning();
+
+          await sendVerificationEmail(
+            row.email,
+            row.token,
+            row.name ?? undefined,
+          );
+
+          return row;
+        });
+
+        return NextResponse.json(
+          {
+            message:
+              "Subscription request renewed. Please check your email to confirm.",
+            subscriber: updated,
+          },
+          { status: 200 },
+        );
+      } catch {
+        return NextResponse.json(
+          {
+            error:
+              "We couldn't send the verification email. Please try again in a moment.",
+          },
+          { status: 502 },
+        );
+      }
     }
 
-    const [created] = await db
-      .insert(subscribers)
-      .values({ email, name, slug })
-      .returning();
+    const token = crypto.randomBytes(32).toString("hex");
+    const tokenExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    return NextResponse.json(created, { status: 201 });
+    try {
+      const created = await db.transaction(async (tx) => {
+        const [row] = await tx
+          .insert(subscribers)
+          .values({ email, name, slug, token, tokenExpiresAt })
+          .returning();
+
+        await sendVerificationEmail(
+          row.email,
+          row.token,
+          row.name ?? undefined,
+        );
+
+        return row;
+      });
+
+      return NextResponse.json(
+        {
+          message: "You're almost there. Please check your email to confirm.",
+          subscriber: created,
+        },
+        { status: 201 },
+      );
+    } catch {
+      return NextResponse.json(
+        {
+          error:
+            "We couldn't send the verification email. Please try again in a moment.",
+        },
+        { status: 502 },
+      );
+    }
   } catch {
     return NextResponse.json(
       { error: "Unable to process request" },

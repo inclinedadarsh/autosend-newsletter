@@ -29,11 +29,11 @@ const SubscribeModal = () => {
         body: JSON.stringify({ email, name, slug }),
       });
       console.log(response);
+      const data = await response.json();
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to subscribe");
+        throw new Error(data.error || "Failed to subscribe");
       }
-      toast.success("Subscribed successfully");
+      toast.success(data.message || "Subscribed successfully");
       setEmail("");
       setName("");
     } catch (error) {
