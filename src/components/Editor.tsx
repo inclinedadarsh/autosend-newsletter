@@ -11,7 +11,9 @@ import {
   diffSourcePlugin,
   headingsPlugin,
   InsertCodeBlock,
+  InsertImage,
   InsertTable,
+  imagePlugin,
   ListsToggle,
   linkDialogPlugin,
   linkPlugin,
@@ -77,6 +79,7 @@ const Editor = ({ markdown, onChange }: EditorProps) => {
               <CreateLink />
               <InsertTable />
               <InsertCodeBlock />
+              <InsertImage />
             </DiffSourceToggleWrapper>
           ),
         }),
@@ -89,6 +92,7 @@ const Editor = ({ markdown, onChange }: EditorProps) => {
         thematicBreakPlugin(),
         linkPlugin(),
         linkDialogPlugin(),
+        imagePlugin(),
         tablePlugin(),
         codeBlockPlugin({ defaultCodeBlockLanguage: "plaintext" }),
         codeMirrorPlugin({
