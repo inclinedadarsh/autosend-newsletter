@@ -10,17 +10,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-
-interface Issue {
-  id: number;
-  title: string;
-  slug: string;
-  description: string | null;
-  content: string | null;
-  publishedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import type { Issue } from "@/types";
 
 interface PageProps {
   params: Promise<{
@@ -40,6 +30,7 @@ const EditIssuePage = ({ params }: PageProps) => {
   const [description, setDescription] = useState("");
   const [publishingDate, setPublishingDate] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
+  const [sendToSubscribers, setSendToSubscribers] = useState(false);
 
   const fetchIssue = useCallback(
     async (issueSlug: string) => {
@@ -128,6 +119,7 @@ const EditIssuePage = ({ params }: PageProps) => {
           description,
           content: markdownContent,
           publishingDate,
+          sendToSubscribers,
         }),
       });
       if (!response.ok) {
@@ -227,6 +219,23 @@ const EditIssuePage = ({ params }: PageProps) => {
               onChange={(e) => setPublishingDate(e.target.value)}
             />
           </div>
+          {!originalIssue.sentToSubscribers && (
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="sendToSubscribers"
+                checked={sendToSubscribers}
+                onChange={(e) => setSendToSubscribers(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300"
+              />
+              <label
+                htmlFor="sendToSubscribers"
+                className="text-sm font-medium cursor-pointer"
+              >
+                Send to subscribers
+              </label>
+            </div>
+          )}
         </div>
 
         <div className="min-h-[400px] mt-6 mb-10 pt-6 border-t-2 border-dashed border-border">

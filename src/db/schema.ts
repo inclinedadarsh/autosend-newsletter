@@ -16,6 +16,8 @@ export const issues = pgTable("issues", {
   publishedAt: timestamp("published_at").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  sentToSubscribers: boolean("sent_to_subscribers").default(false),
+  sentAt: timestamp("sent_at"),
 });
 
 export const sessions = pgTable("sessions", {

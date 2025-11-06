@@ -7,4 +7,6 @@ export interface Issue {
   publishedAt: Date;
   createdAt: Date;
   updatedAt: Date;
+  sentToSubscribers: boolean;
+  sentAt: Date | null;
 }

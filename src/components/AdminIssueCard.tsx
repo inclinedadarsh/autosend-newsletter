@@ -1,27 +1,78 @@
-import { Eye, Pencil, Trash } from "lucide-react";
+import { CheckCircle2, Eye, Mail, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import type { Issue } from "@/types";
 
 const AdminIssueCard = ({
   issue,
   handleDelete,
+  onNewsletterSent,
 }: {
   issue: Issue;
   handleDelete: (slug: string) => void;
+  onNewsletterSent?: () => void;
 }) => {
-  const { title, description, slug, publishedAt } = issue;
+  const { title, description, slug, publishedAt, sentToSubscribers, sentAt } =
+    issue;
+  const [isSending, setIsSending] = useState(false);
   const date = new Date(publishedAt);
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const formattedDate = `${day}/${month}`;
 
+  const handleSendNewsletter = async () => {
+    if (sentToSubscribers) {
+      toast.error("Newsletter has already been sent");
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      const response = await fetch(`/api/issues/${slug}/send`, {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to send newsletter");
+      }
+
+      toast.success("Newsletter sent successfully");
+      if (onNewsletterSent) {
+        onNewsletterSent();
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send newsletter",
+      );
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const formatSentDate = (date: Date | null) => {
+    if (!date) return "";
+    const sentDate = new Date(date);
+    const day = String(sentDate.getDate()).padStart(2, "0");
+    const month = String(sentDate.getMonth() + 1).padStart(2, "0");
+    const year = sentDate.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div className="border rounded-lg border-stone-200 bg-white overflow-hidden">
       <div className="p-4">
         <h2 className="font-medium">{title}</h2>
-        {description && (
+        {description ? (
           <p className="text-sm text-muted-foreground truncate mt-1">
             {description}
+          </p>
+        ) : (
+          <p className="text-sm text-muted-foreground/50 truncate mt-1">
+            No description
           </p>
         )}
         <div className="mt-4 flex items-center gap-10">
@@ -39,6 +90,37 @@ const AdminIssueCard = ({
             </span>
             <span className="text-sm font-medium font-mono">{slug}</span>
           </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-stone-200">
+          {sentToSubscribers ? (
+            <div className="flex items-center gap-2 text-sm">
+              <CheckCircle2 size={16} className="text-green-600" />
+              <span className="text-muted-foreground">Sent to subscribers</span>
+              {sentAt && (
+                <span className="text-muted-foreground font-mono">
+                  ({formatSentDate(sentAt)})
+                </span>
+              )}
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSendNewsletter}
+              disabled={isSending}
+              className="w-full"
+            >
+              {isSending ? (
+                <>
+                  <Spinner /> Sending...
+                </>
+              ) : (
+                <>
+                  <Mail size={14} /> Send to subscribers
+                </>
+              )}
+            </Button>
+          )}
         </div>
       </div>
       <div className="bg-stone-100 border-t border-stone-200 grid grid-cols-3 text-sm">

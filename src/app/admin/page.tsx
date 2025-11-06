@@ -110,6 +110,7 @@ const AdminPage = () => {
                 key={issue.id}
                 issue={issue}
                 handleDelete={handleDelete}
+                onNewsletterSent={fetchIssues}
               />
             ))}
           </div>

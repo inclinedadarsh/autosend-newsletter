@@ -227,6 +227,10 @@
   @apply my-6 border-t border-gray-300;
 }
 
+.mdx-editor-content img {
+  @apply max-w-full w-full h-auto rounded-lg border border-stone-200 block mx-auto my-4;
+}
+
 /* Issue page content styling */
 .issue-content {
   @apply font-serif;
@@ -326,4 +330,8 @@
 
 .issue-content hr {
   @apply my-6 border-t border-gray-300;
+}
+
+.issue-content img {
+  @apply max-w-full w-full h-auto rounded-lg border border-stone-200 block mx-auto my-4;
 }

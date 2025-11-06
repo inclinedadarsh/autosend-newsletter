@@ -19,6 +19,7 @@ const NewIssuePage = () => {
   const [markdownContent, setMarkdownContent] = useState("");
   const [slug, setSlug] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sendToSubscribers, setSendToSubscribers] = useState(false);
   // Set default publishing date to today
   useEffect(() => {
     const today = new Date();
@@ -51,6 +52,7 @@ const NewIssuePage = () => {
           description,
           content: markdownContent,
           publishingDate,
+          sendToSubscribers,
         }),
       });
       if (!response.ok) {
@@ -148,6 +150,21 @@ const NewIssuePage = () => {
               value={publishingDate}
               onChange={(e) => setPublishingDate(e.target.value)}
             />
+          </div>
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="sendToSubscribers"
+              checked={sendToSubscribers}
+              onChange={(e) => setSendToSubscribers(e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300"
+            />
+            <label
+              htmlFor="sendToSubscribers"
+              className="text-sm font-medium cursor-pointer"
+            >
+              Send to subscribers
+            </label>
           </div>
         </div>
 

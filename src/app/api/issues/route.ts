@@ -1,9 +1,10 @@
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { issues } from "@/db/schema";
+import { issues, subscribers } from "@/db/schema";
 import { verifyAdminAuth } from "@/lib/auth";
+import { markdownToHtml, sendNewsletterBulk } from "@/lib/email";
 
 export async function GET() {
   const allIssues = await db
@@ -19,8 +20,14 @@ export async function POST(request: NextRequest) {
     return error;
   }
 
-  const { title, slug, description, content, publishingDate } =
-    await request.json();
+  const {
+    title,
+    slug,
+    description,
+    content,
+    publishingDate,
+    sendToSubscribers,
+  } = await request.json();
   const [issue] = await db
     .insert(issues)
     .values({
@@ -37,5 +44,50 @@ export async function POST(request: NextRequest) {
   revalidatePath("/issues");
   revalidatePath(`/issues/${slug}`);
 
-  return NextResponse.json(issue, { status: 201 });
+  // Send newsletter if requested
+  if (sendToSubscribers && content) {
+    try {
+      // Fetch all verified subscribers
+      const verifiedSubscribers = await db
+        .select()
+        .from(subscribers)
+        .where(eq(subscribers.isVerified, true));
+
+      if (verifiedSubscribers.length > 0) {
+        // Convert markdown to HTML
+        const htmlContent = await markdownToHtml(content);
+
+        // Prepare recipients array
+        const recipients = verifiedSubscribers.map((subscriber) => ({
+          email: subscriber.email,
+          name: subscriber.name ?? undefined,
+        }));
+
+        // Send newsletter in bulk (batched in groups of 100)
+        await sendNewsletterBulk(recipients, title, htmlContent);
+
+        // Update issue to mark as sent
+        const now = new Date();
+        await db
+          .update(issues)
+          .set({
+            sentToSubscribers: true,
+            sentAt: now,
+          })
+          .where(eq(issues.id, issue.id));
+      }
+    } catch (error) {
+      // Log error but don't fail the issue creation
+      console.error("Error sending newsletter:", error);
+    }
+  }
+
+  // Fetch updated issue to return
+  const [updatedIssue] = await db
+    .select()
+    .from(issues)
+    .where(eq(issues.id, issue.id))
+    .limit(1);
+
+  return NextResponse.json(updatedIssue || issue, { status: 201 });
 }
