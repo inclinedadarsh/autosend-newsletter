@@ -1,0 +1,1 @@
+ALTER TABLE "issues" ALTER COLUMN "sent_to_subscribers" SET NOT NULL;
