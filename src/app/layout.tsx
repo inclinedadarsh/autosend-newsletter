@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_JP } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 
 const notoSerifJP = Noto_Serif_JP({
@@ -32,8 +34,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased font-sans">
-        {children}
-        <Toaster richColors theme="light" position="top-center" />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+          <Toaster richColors theme="system" position="top-center" />
+        </ThemeProvider>
       </body>
     </html>
   );
