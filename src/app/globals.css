@@ -49,7 +49,7 @@
 
 :root {
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
+  --background: var(--color-stone-50);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
@@ -64,9 +64,9 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.68 0.16 277);
+  --border: var(--color-stone-200);
+  --input: var(--color-stone-200);
+  --ring: var(--color-stone-300);
   --chart-1: oklch(0.811 0.111 293.571);
   --chart-2: oklch(0.606 0.25 292.717);
   --chart-3: oklch(0.541 0.281 293.009);
@@ -83,7 +83,7 @@
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: var(--color-zinc-900);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
@@ -98,9 +98,9 @@
   --accent: oklch(0.274 0.006 286.033);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.36 0.14 279);
+  --border: var(--color-zinc-800);
+  --input: var(--color-zinc-800);
+  --ring: var(--color-zinc-700);
   --chart-1: oklch(0.811 0.111 293.571);
   --chart-2: oklch(0.606 0.25 292.717);
   --chart-3: oklch(0.541 0.281 293.009);
@@ -121,13 +121,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
 /* MDXEditor content styling */
 .mdx-editor-content {
-  @apply font-serif;
+  @apply font-serif dark:text-white;
   min-height: 400px;
   line-height: 1.75;
 }
@@ -187,15 +187,15 @@
 }
 
 .mdx-editor-content blockquote {
-  @apply font-serif border-l-4 border-gray-300 pl-4 italic my-4;
+  @apply font-serif border-l-4 border pl-4 italic my-4;
 }
 
 .mdx-editor-content code {
-  @apply font-mono bg-gray-100 px-1 py-0.5 rounded text-sm;
+  @apply font-mono px-1 py-0.5 rounded text-sm;
 }
 
 .mdx-editor-content pre {
-  @apply font-mono bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  @apply font-mono p-4 rounded-lg overflow-x-auto mb-4;
 }
 
 .mdx-editor-content pre code {
@@ -203,7 +203,7 @@
 }
 
 .mdx-editor-content a {
-  @apply text-blue-600 underline hover:text-blue-800;
+  @apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-500;
 }
 
 .mdx-editor-content u {
@@ -211,24 +211,24 @@
 }
 
 .mdx-editor-content table {
-  @apply font-serif border-collapse border border-gray-300 mb-4 w-full;
+  @apply font-serif border-collapse border mb-4 w-full;
 }
 
 .mdx-editor-content th,
 .mdx-editor-content td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border px-4 py-2;
 }
 
 .mdx-editor-content th {
-  @apply bg-gray-100 font-semibold;
+  @apply font-semibold;
 }
 
 .mdx-editor-content hr {
-  @apply my-6 border-t border-gray-300;
+  @apply my-6 border-t;
 }
 
 .mdx-editor-content img {
-  @apply max-w-full w-full h-auto rounded-lg border border-stone-200 block mx-auto my-4;
+  @apply max-w-full w-full h-auto rounded-lg border block mx-auto my-4;
 }
 
 /* Issue page content styling */
@@ -296,11 +296,11 @@
 }
 
 .issue-content code {
-  @apply font-mono bg-gray-100 px-1 py-0.5 rounded text-sm;
+  @apply font-mono px-1 py-0.5 rounded text-sm;
 }
 
 .issue-content pre {
-  @apply font-mono bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  @apply font-mono p-4 rounded-lg overflow-x-auto mb-4;
 }
 
 .issue-content pre code {
@@ -308,7 +308,7 @@
 }
 
 .issue-content a {
-  @apply text-blue-600 hover:text-blue-800;
+  @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500;
 }
 
 .issue-content u {
@@ -316,22 +316,22 @@
 }
 
 .issue-content table {
-  @apply font-serif border-collapse border border-gray-300 mb-4 w-full;
+  @apply font-serif border-collapse border mb-4 w-full;
 }
 
 .issue-content th,
 .issue-content td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border px-4 py-2;
 }
 
 .issue-content th {
-  @apply bg-gray-100 font-semibold;
+  @apply font-semibold;
 }
 
 .issue-content hr {
-  @apply my-6 border-t border-gray-300;
+  @apply my-6 border-t;
 }
 
 .issue-content img {
-  @apply max-w-full w-full h-auto rounded-lg border border-stone-200 block mx-auto my-4;
+  @apply max-w-full w-full h-auto rounded-lg border block mx-auto my-4;
 }

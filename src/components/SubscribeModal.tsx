@@ -47,13 +47,13 @@ const SubscribeModal = () => {
 
   return (
     <form
-      className="rounded-lg border border-stone-200 shadow-sm overflow-hidden mt-10"
+      className="rounded-lg border shadow-sm overflow-hidden mt-10"
       onSubmit={handleSubmit}
     >
-      <div className="p-4 flex items-center justify-between bg-stone-100">
+      <div className="p-4 flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-lg font-medium">Subscribe to my newsletter</h2>
-          <p className="">
+          <p className="text-muted-foreground">
             Get these issues delivered straight to your inbox every week!
           </p>
         </div>
@@ -66,7 +66,7 @@ const SubscribeModal = () => {
           {isLoading ? <Spinner /> : "Subscribe"}
         </Button>
       </div>
-      <div className="p-4 border-t border-stone-200 grid gap-4 grid-cols-1 md:grid-cols-2">
+      <div className="p-4 border-t grid gap-4 grid-cols-1 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input

@@ -78,10 +78,10 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="bg-stone-50 py-10">
+    <div className="py-10">
       <div className="max-w-[1200px] mx-auto px-5">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">Admin Page</h1>
+          <h1 className="text-2xl font-medium">Admin Page</h1>
           <div className="flex gap-4">
             <Link
               href="/admin/new"

@@ -1,15 +1,12 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Editor from "@/components/Editor";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { cn } from "@/lib/utils";
 
 const NewIssuePage = () => {
   const router = useRouter();
@@ -87,12 +84,7 @@ const NewIssuePage = () => {
     <div className="w-full max-w-2xl mx-auto px-5 md:px-0 mt-10">
       <form onSubmit={handleSubmit} className="">
         <div className="mb-6 flex items-center justify-between">
-          <Link
-            href="/admin"
-            className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
-          >
-            <ArrowLeft />
-          </Link>
+          <h1 className="text-2xl font-medium">New Issue</h1>
           <div className="space-x-2">
             <Button
               type="submit"

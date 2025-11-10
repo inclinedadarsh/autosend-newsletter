@@ -63,7 +63,7 @@ const AdminIssueCard = ({
   };
 
   return (
-    <div className="border rounded-lg border-stone-200 bg-white overflow-hidden">
+    <div className="border rounded-lg bg-white dark:bg-zinc-950/20 overflow-hidden">
       <div className="p-4">
         <h2 className="font-medium">{title}</h2>
         {description ? (
@@ -91,57 +91,53 @@ const AdminIssueCard = ({
             <span className="text-sm font-medium font-mono">{slug}</span>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-stone-200">
-          {sentToSubscribers ? (
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 size={16} className="text-green-600" />
-              <span className="text-muted-foreground">Sent to subscribers</span>
-              {sentAt && (
-                <span className="text-muted-foreground font-mono">
-                  ({formatSentDate(sentAt)})
-                </span>
-              )}
-            </div>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSendNewsletter}
-              disabled={isSending}
-              className="w-full"
-            >
-              {isSending ? (
-                <>
-                  <Spinner /> Sending...
-                </>
-              ) : (
-                <>
-                  <Mail size={14} /> Send to subscribers
-                </>
-              )}
-            </Button>
-          )}
+        <div className="mt-4 pt-4 border-t">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSendNewsletter}
+            disabled={sentToSubscribers || isSending}
+            className="w-full"
+          >
+            {isSending ? (
+              <>
+                <Spinner /> Sending...
+              </>
+            ) : sentToSubscribers ? (
+              <>
+                <CheckCircle2 size={14} className="text-green-600" />
+                <span>Sent to subscribers</span>
+                {sentAt && (
+                  <span className="font-mono">({formatSentDate(sentAt)})</span>
+                )}
+              </>
+            ) : (
+              <>
+                <Mail size={14} /> Send to subscribers
+              </>
+            )}
+          </Button>
         </div>
       </div>
-      <div className="bg-stone-100 border-t border-stone-200 grid grid-cols-3 text-sm">
+      <div className="bg-stone-100 dark:bg-transparent border-t grid grid-cols-3 text-sm">
         <Link
           href={`/issues/${slug}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center border-r border-stone-200 hover:bg-stone-200 transition-colors"
+          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center border-r hover:bg-stone-200 dark:hover:bg-white/5 transition-colors"
         >
           <Eye size={13} /> View
         </Link>
         <Link
           href={`/admin/edit/${slug}`}
-          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center border-r border-stone-200 hover:bg-stone-200 transition-colors"
+          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center border-r hover:bg-stone-200 dark:hover:bg-white/5 transition-colors"
         >
           <Pencil size={13} /> Edit
         </Link>
         <button
           type="button"
           onClick={() => handleDelete(slug)}
-          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center hover:bg-stone-200 transition-colors cursor-pointer"
+          className="font-mono uppercase tracking-wider flex gap-2 items-center p-4 justify-center hover:bg-stone-200 dark:hover:bg-white/5 transition-colors cursor-pointer"
         >
           <Trash size={13} /> Delete
         </button>
