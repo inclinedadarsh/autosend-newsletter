@@ -17,7 +17,7 @@ export default function IssueItem({ issue }: { issue: Issue }) {
         <time className="text-muted-foreground font-mono group-hover:text-foreground">
           {formattedDate}
         </time>
-        <h2 className="group-hover:text-primary">{issue.title}</h2>
+        <h2 className="group-hover:text-orange-600">{issue.title}</h2>
       </div>
       <ArrowRightIcon
         size={20}
