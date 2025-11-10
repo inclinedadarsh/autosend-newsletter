@@ -20,9 +20,23 @@ export async function proxy(req: NextRequest) {
     }
   }
 
+  // Redirect logged-in users away from /login
+  if (pathname === "/login") {
+    const sessionToken = req.cookies.get("session")?.value;
+
+    if (sessionToken) {
+      // Verify session exists
+      const session = await getSession(sessionToken);
+
+      if (session) {
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/login"],
 };
