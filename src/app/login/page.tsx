@@ -5,7 +5,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 
 const LoginPage = () => {
@@ -38,27 +37,32 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center h-dvh">
-      <form onSubmit={handleSubmit} className="max-w-md w-full px-4">
-        <h1 className="text-3xl md:text-4xl font-bold">Welcome back 👋</h1>
-        <div className="space-y-2 mt-10">
-          <Label htmlFor="password">Enter your password</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            disabled={isLoading || password.length === 0}
-            className="w-full"
-          >
-            {isLoading ? <Spinner /> : "Log in to your account"}
-          </Button>
-        </div>
-      </form>
-    </div>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md w-full border rounded-lg overflow-hidden mx-auto mt-16"
+    >
+      <div className="p-4 space-y-2">
+        <h1 className="text-3xl font-semibold">Welcome back 👋</h1>
+        <p className="text-muted-foreground">
+          Please enter the password you setup for the admin panel.
+        </p>
+      </div>
+      <div className="space-y-2 p-4 border-t">
+        <Input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          type="submit"
+          disabled={isLoading || password.length === 0}
+          className="w-full"
+        >
+          {isLoading ? <Spinner /> : "Log in to your account"}
+        </Button>
+      </div>
+    </form>
   );
 };
 
