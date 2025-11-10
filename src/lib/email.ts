@@ -5,6 +5,7 @@ const AUTOSEND_API_KEY = process.env.AUTOSEND_API_KEY;
 const VERIFICATION_TEMPLATE_ID = process.env.VERIFICATION_TEMPLATE_ID;
 const SITE_LINK = process.env.SITE_LINK;
 const WELCOME_TEMPLATE_ID = process.env.WELCOME_TEMPLATE_ID;
+const UNSUBSCRIBE_GROUP_ID = process.env.UNSUBSCRIBE_GROUP_ID;
 
 export async function sendVerificationEmail(
   email: string,
@@ -291,6 +292,7 @@ export async function sendNewsletterBulk(
           email: "dubeyadarshmain@gmail.com",
           name: "Adarsh Dubey",
         },
+        unsubscribeGroupId: UNSUBSCRIBE_GROUP_ID,
       }),
     });
 
